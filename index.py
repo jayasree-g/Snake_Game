@@ -24,11 +24,10 @@ score = 0
 value = score_font.render("Your Score: " + str(score), True, (222, 222, 222))
 game_window.blit(value, [0, 0])
 snake = pygame.image.load("snake.png").convert()
-target_x = random.randrange(1, (window_x // 10)) * 10
-target_y = random.randrange(1, (window_y // 10)) * 10
-target = pygame.image.load("apple.png").convert()
-target = pygame.transform.scale(target, (50, 34))
-game_window.blit(target, (30, 70))
+apple_x = random.randrange(1, (window_x // 10)) * 10
+apple_y = random.randrange(1, (window_y // 10)) * 10
+apple = pygame.image.load("apple.png").convert()
+apple = pygame.transform.scale(apple, (50, 34))
 game_window.blit(value, [0, 0])
 pygame.display.flip()
 clock = pygame.time.Clock()
@@ -36,10 +35,7 @@ running = True
 while running:
     if 0 == snake_x or snake_x == window_x or 0 == snake_y or snake_y == window_y or 0 == snake_x1 or snake_x1 == window_x or 0 == snake_y1 or snake_y1 == window_y:
         running = False
-    # if score > 50:
-    #   snake_speed = 20
-    # elif score > 70:
-    #   snake_speed = 30
+
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
@@ -65,15 +61,16 @@ while running:
     snake = pygame.transform.scale(snake, (30, 30))
 
     game_window.blit(value, [0, 0])
-    if target_x < snake_x < target_x + 50 and target_y < snake_y < target_y + 34 or target_x < snake_x + 30 < target_x + 50 and target_y < snake_y + 30 < target_y + 34:
-        target_x = random.randrange(1, (window_x // 10)) * 10
-        target_y = random.randrange(1, (window_y // 10)) * 10
+    if apple_x < snake_x < apple_x + 50 and apple_y < snake_y < apple_y + 34 or apple_x < snake_x + 30 < apple_x + 50 and apple_y < snake_y + 30 < apple_y + 34:
         score += 10
         length += score
         if score % 50 == 0:
             snake_speed += 10
+        apple_x = random.randrange(10, (window_x // 10)) * 10
+        apple_y = random.randrange(10, (window_y // 10)) * 10
+
     snake = pygame.transform.scale(snake, (30 , 30))
-    game_window.blit(target, (target_x, target_y))
+    game_window.blit(apple, (apple_x, apple_y))
     game_window.blit(snake, (snake_x, snake_y))
     value = score_font.render("Your Score: " + str(score), True, (222, 222, 222))
     pygame.display.update()
